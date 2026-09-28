@@ -12,7 +12,7 @@
     "dark": "/favicon-m-white.ico"
   },
   "appearance": {
-    "default": "dark"
+    "default": "light"
   },
   "background": {
     "color": {
@@ -26,358 +26,28 @@
     "format": "woff2"
   },
   "navigation": {
-    "tabs": [
+    "global": {
+      "anchors": [
+        {
+          "anchor": "About",
+          "href": "https://www.mezmo.com/about"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://www.mezmo.com/blog"
+        }
+      ]
+    },
+    "products": [
       {
-        "tab": "Home",
-        "pages": ["index"]
-      },
-      {
-        "tab": "Log Management",
+        "product": "AURA",
+        "description": "Open source SRE agent, Apache 2.0",
+        "icon": "robot",
         "groups": [
           {
-            "group": "Overview",
-            "pages": [
-              "docs/about-mezmo-log-analysis",
-              "docs/concepts",
-              "docs/mezmo-quick-start-guide",
-              "docs/soc-2-compliance",
-              "docs/hipaa-compliance",
-              "docs/gdpr-compliance",
-              "docs/pci-compliance",
-              "docs/mezmo-service-endpoints"
-            ]
+            "group": "Welcome",
+            "pages": ["index"]
           },
-          {
-            "group": "Ingest Logs",
-            "pages": [
-              "docs/ingestion",
-              "docs/log-parsing",
-              "docs/Mezmo-ingestion-service-limits",
-              "docs/log-ingestion-delays",
-              "docs/introducing-the-agent",
-              "docs/mezmo-agent-support-matrix",
-              "docs/client-side-logging",
-              "docs/code-libraries",
-              "docs/ingestion-integrations",
-              "docs/kubernetes-enrichment",
-              "docs/mezmo-agent-configuration-for-kubernetes",
-              "docs/agent-generated-errors",
-              "docs/ingestion-integrations/docker",
-              "docs/ingestion-integrations/fluentd",
-              "docs/ingestion-integrations/heroku",
-              "docs/ingestion-integrations/nxlog-for-windows",
-              "docs/ingestion-integrations/rsyslog",
-              "docs/ingestion-integrations/syslog",
-              "docs/ingestion-integrations/syslog-ng",
-              "docs/windows-security-template",
-              "docs/browser-logger-template",
-              "docs/heroku-template",
-              "docs/ingestion-key"
-            ]
-          },
-          {
-            "group": "Manage Log Lines",
-            "pages": [
-              "docs/store-and-show-raw-lines",
-              "docs/excluding-log-lines",
-              "docs/export-lines",
-              "docs/archiving",
-              "docs/data-restoration",
-              "docs/using-templates"
-            ]
-          },
-          {
-            "group": "View and Analyze Logs",
-            "pages": [
-              "docs/view-log-data",
-              "docs/search-and-filter",
-              "docs/visualize-log-data-with-graphs",
-              "docs/use-screens-and-widgets-to-monitor-log-data",
-              "docs/parse-logs-with-custom-templates",
-              "docs/exclusion-rules",
-              "docs/view-log-data-by-timeline",
-              "docs/create-and-edit-views",
-              "docs/add-alerts-to-views",
-              "docs/search-json-fields",
-              "docs/search-tips",
-              "docs/widget-use-cases"
-            ]
-          },
-          {
-            "group": "Alerts",
-            "pages": [
-              "docs/index-rate-alerts-overview",
-              "docs/usage-alerts",
-              "docs/appoptics-alert-integration",
-              "docs/datadog-alert-integration",
-              "docs/email-alert-integration",
-              "docs/opsgenie-alert-integration",
-              "docs/pagerduty-alert-integration",
-              "docs/pagerduty-auto-resolve",
-              "docs/slack-alert-integration",
-              "docs/sysdig-alert-integration",
-              "docs/victorops-alert-integration",
-              "docs/webhook-alert-integration",
-              "docs/create-index-rate-alerts",
-              "docs/index-rate-alerts-metrics"
-            ]
-          },
-          {
-            "group": "Account and Organization Management",
-            "pages": [
-              "docs/organization-management-overview",
-              "docs/manage-access",
-              "docs/manage-usage",
-              "docs/manage-usage-quotas",
-              "docs/manage-enterprise-organizations",
-              "docs/variable-retention",
-              "docs/the-usage-dashboard",
-              "docs/billing-procedures",
-              "docs/access-management-for-enterprise-organizations",
-              "docs/enterprise-saml-sso",
-              "docs/okta-saml-setup",
-              "docs/onelogin-saml-setup",
-              "docs/azure-saml"
-            ]
-          },
-          {
-            "group": "Mezmo MCP and AI",
-            "pages": [
-              "docs/mezmo-mcp",
-              "docs/use-ai-assistant",
-              "docs/ai-investigations",
-              "docs/ingestion-integrations/akamai-cloud-monitor-logs"
-            ]
-          },
-          {
-            "group": "Integrations",
-            "pages": ["docs/ingestion-integrations/github-events"]
-          },
-          {
-            "group": "Other Topics",
-            "pages": [
-              "docs/ingestion-integrations/aptible-logs",
-              "docs/ingestion-integrations/cloudwatch",
-              "docs/ingestion-integrations/elastic-beanstalk",
-              "docs/ingestion-integrations/amazon-s3-logs",
-              "docs/ingestion-integrations/cloudfoundry",
-              "docs/ingestion-integrations/fluentbit",
-              "docs/ingestion-integrations/flynn",
-              "docs/ingestion-integrations/launchdarkly",
-              "docs/ingestion-integrations/opentelemetry-exporter",
-              "docs/ingestion-integrations/saltstack",
-              "docs/ingestion-integrations/vector",
-              "docs/ingestion-integrations/vercel",
-              "docs/export-logs-to-external-storage",
-              "docs/read-archived-logs",
-              "docs/nginx-ingress-controller-template",
-              "docs/web-server-template",
-              "docs/terraform-provider",
-              "docs/format-log-lines-with--custom-line-templates",
-              "docs/searching-log-contents",
-              "docs/how-to-graph-logs-visualize-data-with-mezmo",
-              "docs/create-a-graph",
-              "docs/add-a-plot-to-a-graph",
-              "docs/add-a-breakdown-to-a-graph",
-              "docs/organize-visualizations-by-category",
-              "docs/web-analytics-screen",
-              "docs/server-analytics-screen",
-              "docs/server-security-screen",
-              "docs/create-a-parsing-template",
-              "docs/extract-fields",
-              "docs/edit-parsing-operations-with-the-mini-map",
-              "docs/parsing-operators",
-              "docs/import-and-export-organizations",
-              "docs/rbac",
-              "docs/manage-members",
-              "docs/feature-access-matrix",
-              "docs/system-cross-domain-identity-management",
-              "docs/add-enterprise-admins"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Telemetry Pipelines",
-        "groups": [
-          {
-            "group": "About Pipelines",
-            "pages": [
-              "telemetry-pipelines/about-mezmo-telemetry-pipelines",
-              "telemetry-pipelines/getting-started-with-mezmo-telemetry-pipeline",
-              "telemetry-pipelines/build-deploy-mezmo-pipeline",
-              "telemetry-pipelines/view-pipeline-data",
-              "telemetry-pipelines/monitor-data-pipelines",
-              "telemetry-pipelines/about-mezmo-trial",
-              "telemetry-pipelines/configure-responsive-pipelines",
-              "telemetry-pipelines/replay-buffered-data",
-              "telemetry-pipelines/shared-sources",
-              "telemetry-pipelines/data-profiling",
-              "telemetry-pipelines/about-mezmo-flow"
-            ]
-          },
-          {
-            "group": "Sources",
-            "root": "telemetry-pipelines/set-up-pipeline-sources",
-            "directory": "accordion",
-            "pages": [
-              "telemetry-pipelines/azure-event-hub-source",
-              "telemetry-pipelines/demo-logs-source",
-              "telemetry-pipelines/fluent-source",
-              "telemetry-pipelines/http-source",
-              "telemetry-pipelines/http-client-source",
-              "telemetry-pipelines/kafka-source",
-              "telemetry-pipelines/kinesis-firehose-source",
-              "telemetry-pipelines/log-analysis-ingestion-source",
-              "telemetry-pipelines/log-analysis-source",
-              "telemetry-pipelines/mezmo-agent-source",
-              "telemetry-pipelines/mezmo-datadog-source-source",
-              "telemetry-pipelines/mezmo-datadog-source-v2-source",
-              "telemetry-pipelines/open-telemetry-source",
-              "telemetry-pipelines/pipeline-data-restoration-source",
-              "telemetry-pipelines/logstash-source",
-              "telemetry-pipelines/prometheus-remote-write-source",
-              "telemetry-pipelines/s3-source",
-              "telemetry-pipelines/splunk-hec-source",
-              "telemetry-pipelines/syslog-over-http-pipeline-source",
-              "telemetry-pipelines/sqs-source",
-              "telemetry-pipelines/webhook-source"
-            ]
-          },
-          {
-            "group": "Processors",
-            "root": "telemetry-pipelines/set-up-pipeline-processors",
-            "directory": "accordion",
-            "pages": [
-              "telemetry-pipelines/aggregate-processor",
-              "telemetry-pipelines/compact-fields-processor",
-              "telemetry-pipelines/data-profiler-processor",
-              "telemetry-pipelines/decrypt-fields-processor",
-              "telemetry-pipelines/drop-fields-processor",
-              "telemetry-pipelines/dedupe-processor",
-              "telemetry-pipelines/encrypt-fields-processor",
-              "telemetry-pipelines/event-to-metric-processor",
-              "telemetry-pipelines/filter-processor",
-              "telemetry-pipelines/flatten-fields-processor",
-              "telemetry-pipelines/js-script-processor",
-              "telemetry-pipelines/map-fields-processor",
-              "telemetry-pipelines/metrics-tag-cardinality-limit-processor",
-              "telemetry-pipelines/parse-processor",
-              "telemetry-pipelines/parse-sequentially-processor",
-              "telemetry-pipelines/redact-processor",
-              "telemetry-pipelines/reduce-processor",
-              "telemetry-pipelines/route-processor",
-              "telemetry-pipelines/sample-processor",
-              "telemetry-pipelines/set-timestamp-processor",
-              "telemetry-pipelines/stringify-processor",
-              "telemetry-pipelines/throttle-processor",
-              "telemetry-pipelines/trace-sampling-processor",
-              "telemetry-pipelines/unroll-processor"
-            ]
-          },
-          {
-            "group": "Destinations",
-            "root": "telemetry-pipelines/set-up-pipeline-destinations",
-            "directory": "accordion",
-            "pages": [
-              "telemetry-pipelines/azure-blob-storage-destination",
-              "telemetry-pipelines/blackhole-destination",
-              "telemetry-pipelines/checkly-destination",
-              "telemetry-pipelines/cloudwatch-metrics-destination",
-              "telemetry-pipelines/cloudwatch-logs-destination",
-              "telemetry-pipelines/datadog-logs-destination",
-              "telemetry-pipelines/datadog-metrics-destination",
-              "telemetry-pipelines/datadog-traces-destination",
-              "telemetry-pipelines/elasticsearch-destination",
-              "telemetry-pipelines/gcp-cloud-storage-destination",
-              "telemetry-pipelines/gcp-cloud-monitoring-destination",
-              "telemetry-pipelines/gcp-cloud-operations-destination",
-              "telemetry-pipelines/gcp-cloud-pubsub-destination",
-              "telemetry-pipelines/honeycomb-logs-destination",
-              "telemetry-pipelines/http-destination",
-              "telemetry-pipelines/kafka-destination",
-              "telemetry-pipelines/kinesis-firehose-destination",
-              "telemetry-pipelines/kinesis-streams-destination",
-              "telemetry-pipelines/loki-destination",
-              "telemetry-pipelines/mezmo-archive-destination",
-              "telemetry-pipelines/mezmo-destination",
-              "telemetry-pipelines/new-relic-destination",
-              "telemetry-pipelines/notification-channel-destination",
-              "telemetry-pipelines/open-telemetry-destination",
-              "telemetry-pipelines/prometheus-remote-write-destination",
-              "telemetry-pipelines/s3-destination",
-              "telemetry-pipelines/splunk-hec-logs-destination",
-              "telemetry-pipelines/sqs-destination",
-              "telemetry-pipelines/sumo-logic-logs-destination"
-            ]
-          },
-          {
-            "group": "Pipeline Management",
-            "pages": [
-              "telemetry-pipelines/edit-a-pipeline",
-              "telemetry-pipelines/export-import-pipeline-manifest",
-              "telemetry-pipelines/pipeline-event-data-model",
-              "telemetry-pipelines/simulate-pipeline-data-flows",
-              "telemetry-pipelines/set-pipeline-access",
-              "telemetry-pipelines/metric-data-within-the-pipeline",
-              "telemetry-pipelines/view-pipeline-errors",
-              "telemetry-pipelines/demo-pipeline-guide",
-              "telemetry-pipelines/pipeline-threshold-alerts",
-              "telemetry-pipelines/build-pipelines-terraform",
-              "telemetry-pipelines/syntax-for-editing-pipeline-component-configuration-values",
-              "telemetry-pipelines/pipeline-architecture-for-kubernetes-data-optimizationzlz",
-              "telemetry-pipelines/required-schema-for-mezmo-log-analysis-destination",
-              "telemetry-pipelines/kafka-aeh",
-              "telemetry-pipelines/how-to-create-shared-sources",
-              "telemetry-pipelines/shared-sources-overview",
-              "telemetry-pipelines/the-log-analysis-source-data-pipeline",
-              "telemetry-pipelines/how-to-convert-existing-source-to-shared",
-              "telemetry-pipelines/how-to-use-shared-source-in-pipeline",
-              "telemetry-pipelines/sudden-increase-in-source-volume",
-              "telemetry-pipelines/otel-collector",
-              "telemetry-pipelines/create-processor-groups",
-              "telemetry-pipelines/percentage-volume-increase"
-            ]
-          },
-          {
-            "group": "Other Topics",
-            "pages": [
-              "telemetry-pipelines/set-up-and-process-http-endpoint-data",
-              "telemetry-pipelines/using-grok-to-parse",
-              "telemetry-pipelines/error-code-reference",
-              "telemetry-pipelines/archive-restore-data",
-              "telemetry-pipelines/in-stream-alerts",
-              "telemetry-pipelines/set-in-stream-alerts",
-              "telemetry-pipelines/example-in-stream-alert-configurations",
-              "telemetry-pipelines/getting-started-with-the-mezmo-platform",
-              "telemetry-pipelines/api-references",
-              "telemetry-pipelines/view-event-metrics",
-              "telemetry-pipelines/configure-surge-detection-alerts",
-              "telemetry-pipelines/archive-restore-data-tutorial",
-              "telemetry-pipelines/high-error-rate",
-              "telemetry-pipelines/presence-of-personally-identifying-information--pii-",
-              "telemetry-pipelines/otel-collector",
-              "telemetry-pipelines/aws-cloudwatch-logs",
-              "telemetry-pipelines/checkly"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Mezmo Edge",
-        "pages": [
-          "mezmo-edge/mezmo-edge-pipelines-for-local-data",
-          "mezmo-edge/set-up-mezmo-edge-in-kubernetes",
-          "mezmo-edge/mezmo-edge-deployment-planning",
-          "mezmo-edge/http-source-for-mezmo-edge",
-          "mezmo-edge/syslog-source-for-mezmo-edge",
-          "mezmo-edge/set-up-mezmo-edge-in-a-docker-container",
-          "mezmo-edge/tap-and-view-mezmo-edge-pipeline-data-on-premises"
-        ]
-      },
-      {
-        "tab": "AURA",
-        "groups": [
           {
             "group": "Getting Started",
             "pages": [
@@ -424,94 +94,437 @@
         ]
       },
       {
-        "tab": "Guides",
-        "groups": [
+        "product": "Mezmo Platform",
+        "description": "Commercial telemetry platform",
+        "icon": "layer-group",
+        "tabs": [
           {
-            "group": "Optimization Tutorial",
-            "pages": [
-              "OptTutorial/1-intro",
-              "OptTutorial/2-shared-sources",
-              "OptTutorial/3-configure-build-demo",
-              "OptTutorial/4-profile-log-data",
-              "OptTutorial/5-optimize-logs",
-              "OptTutorial/6-optimize-metrics",
-              "OptTutorial/7-optimize-traces",
-              "OptTutorial/8-optimize-responsively",
-              "OptTutorial/9-next-steps"
+            "tab": "Overview",
+            "pages": ["mezmo-platform"]
+          },
+          {
+            "tab": "Log Management",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "docs/about-mezmo-log-analysis",
+                  "docs/concepts",
+                  "docs/mezmo-quick-start-guide",
+                  "docs/soc-2-compliance",
+                  "docs/hipaa-compliance",
+                  "docs/gdpr-compliance",
+                  "docs/pci-compliance",
+                  "docs/mezmo-service-endpoints"
+                ]
+              },
+              {
+                "group": "Ingest Logs",
+                "pages": [
+                  "docs/ingestion",
+                  "docs/log-parsing",
+                  "docs/Mezmo-ingestion-service-limits",
+                  "docs/log-ingestion-delays",
+                  "docs/introducing-the-agent",
+                  "docs/mezmo-agent-support-matrix",
+                  "docs/client-side-logging",
+                  "docs/code-libraries",
+                  "docs/ingestion-integrations",
+                  "docs/kubernetes-enrichment",
+                  "docs/mezmo-agent-configuration-for-kubernetes",
+                  "docs/agent-generated-errors",
+                  "docs/ingestion-integrations/docker",
+                  "docs/ingestion-integrations/fluentd",
+                  "docs/ingestion-integrations/heroku",
+                  "docs/ingestion-integrations/nxlog-for-windows",
+                  "docs/ingestion-integrations/rsyslog",
+                  "docs/ingestion-integrations/syslog",
+                  "docs/ingestion-integrations/syslog-ng",
+                  "docs/windows-security-template",
+                  "docs/browser-logger-template",
+                  "docs/heroku-template",
+                  "docs/ingestion-key"
+                ]
+              },
+              {
+                "group": "Manage Log Lines",
+                "pages": [
+                  "docs/store-and-show-raw-lines",
+                  "docs/excluding-log-lines",
+                  "docs/export-lines",
+                  "docs/archiving",
+                  "docs/data-restoration",
+                  "docs/using-templates"
+                ]
+              },
+              {
+                "group": "View and Analyze Logs",
+                "pages": [
+                  "docs/view-log-data",
+                  "docs/search-and-filter",
+                  "docs/visualize-log-data-with-graphs",
+                  "docs/use-screens-and-widgets-to-monitor-log-data",
+                  "docs/parse-logs-with-custom-templates",
+                  "docs/exclusion-rules",
+                  "docs/view-log-data-by-timeline",
+                  "docs/create-and-edit-views",
+                  "docs/add-alerts-to-views",
+                  "docs/search-json-fields",
+                  "docs/search-tips",
+                  "docs/widget-use-cases"
+                ]
+              },
+              {
+                "group": "Alerts",
+                "pages": [
+                  "docs/index-rate-alerts-overview",
+                  "docs/usage-alerts",
+                  "docs/appoptics-alert-integration",
+                  "docs/datadog-alert-integration",
+                  "docs/email-alert-integration",
+                  "docs/opsgenie-alert-integration",
+                  "docs/pagerduty-alert-integration",
+                  "docs/pagerduty-auto-resolve",
+                  "docs/slack-alert-integration",
+                  "docs/sysdig-alert-integration",
+                  "docs/victorops-alert-integration",
+                  "docs/webhook-alert-integration",
+                  "docs/create-index-rate-alerts",
+                  "docs/index-rate-alerts-metrics"
+                ]
+              },
+              {
+                "group": "Account and Organization Management",
+                "pages": [
+                  "docs/organization-management-overview",
+                  "docs/manage-access",
+                  "docs/manage-usage",
+                  "docs/manage-usage-quotas",
+                  "docs/manage-enterprise-organizations",
+                  "docs/variable-retention",
+                  "docs/the-usage-dashboard",
+                  "docs/billing-procedures",
+                  "docs/access-management-for-enterprise-organizations",
+                  "docs/enterprise-saml-sso",
+                  "docs/okta-saml-setup",
+                  "docs/onelogin-saml-setup",
+                  "docs/azure-saml"
+                ]
+              },
+              {
+                "group": "Mezmo MCP and AI",
+                "pages": [
+                  "docs/mezmo-mcp",
+                  "docs/use-ai-assistant",
+                  "docs/ai-investigations",
+                  "docs/ingestion-integrations/akamai-cloud-monitor-logs"
+                ]
+              },
+              {
+                "group": "Integrations",
+                "pages": ["docs/ingestion-integrations/github-events"]
+              },
+              {
+                "group": "Other Topics",
+                "pages": [
+                  "docs/ingestion-integrations/aptible-logs",
+                  "docs/ingestion-integrations/cloudwatch",
+                  "docs/ingestion-integrations/elastic-beanstalk",
+                  "docs/ingestion-integrations/amazon-s3-logs",
+                  "docs/ingestion-integrations/cloudfoundry",
+                  "docs/ingestion-integrations/fluentbit",
+                  "docs/ingestion-integrations/flynn",
+                  "docs/ingestion-integrations/launchdarkly",
+                  "docs/ingestion-integrations/opentelemetry-exporter",
+                  "docs/ingestion-integrations/saltstack",
+                  "docs/ingestion-integrations/vector",
+                  "docs/ingestion-integrations/vercel",
+                  "docs/export-logs-to-external-storage",
+                  "docs/read-archived-logs",
+                  "docs/nginx-ingress-controller-template",
+                  "docs/web-server-template",
+                  "docs/terraform-provider",
+                  "docs/format-log-lines-with--custom-line-templates",
+                  "docs/searching-log-contents",
+                  "docs/how-to-graph-logs-visualize-data-with-mezmo",
+                  "docs/create-a-graph",
+                  "docs/add-a-plot-to-a-graph",
+                  "docs/add-a-breakdown-to-a-graph",
+                  "docs/organize-visualizations-by-category",
+                  "docs/web-analytics-screen",
+                  "docs/server-analytics-screen",
+                  "docs/server-security-screen",
+                  "docs/create-a-parsing-template",
+                  "docs/extract-fields",
+                  "docs/edit-parsing-operations-with-the-mini-map",
+                  "docs/parsing-operators",
+                  "docs/import-and-export-organizations",
+                  "docs/rbac",
+                  "docs/manage-members",
+                  "docs/feature-access-matrix",
+                  "docs/system-cross-domain-identity-management",
+                  "docs/add-enterprise-admins"
+                ]
+              }
             ]
           },
           {
-            "group": "Practitioner's Guide to Data Optimization",
-            "pages": [
-              "practioner-guide-data-optimization/data-optimization-introduction",
-              "practioner-guide-data-optimization/optimize-your-observability-data-in-six-steps",
-              "practioner-guide-data-optimization/analysis-data-reduction-techniques",
-              "practioner-guide-data-optimization/reference-architectures-for-data-optimization-pipelines",
-              "practioner-guide-data-optimization/pipeline-architecture-for-data-reduction",
-              "practioner-guide-data-optimization/pipeline-architecture-for-kubernetes-data-optimization",
-              "practioner-guide-data-optimization/pipeline-example--convert-200-events-to-metrics",
-              "practioner-guide-data-optimization/pipeline-module--security-and-compliance",
-              "practioner-guide-data-optimization/pipeline-module--route",
-              "practioner-guide-data-optimization/demo-pipeline-guide8ke"
+            "tab": "Telemetry Pipelines",
+            "groups": [
+              {
+                "group": "About Pipelines",
+                "pages": [
+                  "telemetry-pipelines/about-mezmo-telemetry-pipelines",
+                  "telemetry-pipelines/getting-started-with-mezmo-telemetry-pipeline",
+                  "telemetry-pipelines/build-deploy-mezmo-pipeline",
+                  "telemetry-pipelines/view-pipeline-data",
+                  "telemetry-pipelines/monitor-data-pipelines",
+                  "telemetry-pipelines/about-mezmo-trial",
+                  "telemetry-pipelines/configure-responsive-pipelines",
+                  "telemetry-pipelines/replay-buffered-data",
+                  "telemetry-pipelines/shared-sources",
+                  "telemetry-pipelines/data-profiling",
+                  "telemetry-pipelines/about-mezmo-flow"
+                ]
+              },
+              {
+                "group": "Sources",
+                "root": "telemetry-pipelines/set-up-pipeline-sources",
+                "directory": "accordion",
+                "pages": [
+                  "telemetry-pipelines/azure-event-hub-source",
+                  "telemetry-pipelines/demo-logs-source",
+                  "telemetry-pipelines/fluent-source",
+                  "telemetry-pipelines/http-source",
+                  "telemetry-pipelines/http-client-source",
+                  "telemetry-pipelines/kafka-source",
+                  "telemetry-pipelines/kinesis-firehose-source",
+                  "telemetry-pipelines/log-analysis-ingestion-source",
+                  "telemetry-pipelines/log-analysis-source",
+                  "telemetry-pipelines/mezmo-agent-source",
+                  "telemetry-pipelines/mezmo-datadog-source-source",
+                  "telemetry-pipelines/mezmo-datadog-source-v2-source",
+                  "telemetry-pipelines/open-telemetry-source",
+                  "telemetry-pipelines/pipeline-data-restoration-source",
+                  "telemetry-pipelines/logstash-source",
+                  "telemetry-pipelines/prometheus-remote-write-source",
+                  "telemetry-pipelines/s3-source",
+                  "telemetry-pipelines/splunk-hec-source",
+                  "telemetry-pipelines/syslog-over-http-pipeline-source",
+                  "telemetry-pipelines/sqs-source",
+                  "telemetry-pipelines/webhook-source"
+                ]
+              },
+              {
+                "group": "Processors",
+                "root": "telemetry-pipelines/set-up-pipeline-processors",
+                "directory": "accordion",
+                "pages": [
+                  "telemetry-pipelines/aggregate-processor",
+                  "telemetry-pipelines/compact-fields-processor",
+                  "telemetry-pipelines/data-profiler-processor",
+                  "telemetry-pipelines/decrypt-fields-processor",
+                  "telemetry-pipelines/drop-fields-processor",
+                  "telemetry-pipelines/dedupe-processor",
+                  "telemetry-pipelines/encrypt-fields-processor",
+                  "telemetry-pipelines/event-to-metric-processor",
+                  "telemetry-pipelines/filter-processor",
+                  "telemetry-pipelines/flatten-fields-processor",
+                  "telemetry-pipelines/js-script-processor",
+                  "telemetry-pipelines/map-fields-processor",
+                  "telemetry-pipelines/metrics-tag-cardinality-limit-processor",
+                  "telemetry-pipelines/parse-processor",
+                  "telemetry-pipelines/parse-sequentially-processor",
+                  "telemetry-pipelines/redact-processor",
+                  "telemetry-pipelines/reduce-processor",
+                  "telemetry-pipelines/route-processor",
+                  "telemetry-pipelines/sample-processor",
+                  "telemetry-pipelines/set-timestamp-processor",
+                  "telemetry-pipelines/stringify-processor",
+                  "telemetry-pipelines/throttle-processor",
+                  "telemetry-pipelines/trace-sampling-processor",
+                  "telemetry-pipelines/unroll-processor"
+                ]
+              },
+              {
+                "group": "Destinations",
+                "root": "telemetry-pipelines/set-up-pipeline-destinations",
+                "directory": "accordion",
+                "pages": [
+                  "telemetry-pipelines/azure-blob-storage-destination",
+                  "telemetry-pipelines/blackhole-destination",
+                  "telemetry-pipelines/checkly-destination",
+                  "telemetry-pipelines/cloudwatch-metrics-destination",
+                  "telemetry-pipelines/cloudwatch-logs-destination",
+                  "telemetry-pipelines/datadog-logs-destination",
+                  "telemetry-pipelines/datadog-metrics-destination",
+                  "telemetry-pipelines/datadog-traces-destination",
+                  "telemetry-pipelines/elasticsearch-destination",
+                  "telemetry-pipelines/gcp-cloud-storage-destination",
+                  "telemetry-pipelines/gcp-cloud-monitoring-destination",
+                  "telemetry-pipelines/gcp-cloud-operations-destination",
+                  "telemetry-pipelines/gcp-cloud-pubsub-destination",
+                  "telemetry-pipelines/honeycomb-logs-destination",
+                  "telemetry-pipelines/http-destination",
+                  "telemetry-pipelines/kafka-destination",
+                  "telemetry-pipelines/kinesis-firehose-destination",
+                  "telemetry-pipelines/kinesis-streams-destination",
+                  "telemetry-pipelines/loki-destination",
+                  "telemetry-pipelines/mezmo-archive-destination",
+                  "telemetry-pipelines/mezmo-destination",
+                  "telemetry-pipelines/new-relic-destination",
+                  "telemetry-pipelines/notification-channel-destination",
+                  "telemetry-pipelines/open-telemetry-destination",
+                  "telemetry-pipelines/prometheus-remote-write-destination",
+                  "telemetry-pipelines/s3-destination",
+                  "telemetry-pipelines/splunk-hec-logs-destination",
+                  "telemetry-pipelines/sqs-destination",
+                  "telemetry-pipelines/sumo-logic-logs-destination"
+                ]
+              },
+              {
+                "group": "Pipeline Management",
+                "pages": [
+                  "telemetry-pipelines/edit-a-pipeline",
+                  "telemetry-pipelines/export-import-pipeline-manifest",
+                  "telemetry-pipelines/pipeline-event-data-model",
+                  "telemetry-pipelines/simulate-pipeline-data-flows",
+                  "telemetry-pipelines/set-pipeline-access",
+                  "telemetry-pipelines/metric-data-within-the-pipeline",
+                  "telemetry-pipelines/view-pipeline-errors",
+                  "telemetry-pipelines/demo-pipeline-guide",
+                  "telemetry-pipelines/pipeline-threshold-alerts",
+                  "telemetry-pipelines/build-pipelines-terraform",
+                  "telemetry-pipelines/syntax-for-editing-pipeline-component-configuration-values",
+                  "telemetry-pipelines/pipeline-architecture-for-kubernetes-data-optimizationzlz",
+                  "telemetry-pipelines/required-schema-for-mezmo-log-analysis-destination",
+                  "telemetry-pipelines/kafka-aeh",
+                  "telemetry-pipelines/how-to-create-shared-sources",
+                  "telemetry-pipelines/shared-sources-overview",
+                  "telemetry-pipelines/the-log-analysis-source-data-pipeline",
+                  "telemetry-pipelines/how-to-convert-existing-source-to-shared",
+                  "telemetry-pipelines/how-to-use-shared-source-in-pipeline",
+                  "telemetry-pipelines/sudden-increase-in-source-volume",
+                  "telemetry-pipelines/otel-collector",
+                  "telemetry-pipelines/create-processor-groups",
+                  "telemetry-pipelines/percentage-volume-increase"
+                ]
+              },
+              {
+                "group": "Other Topics",
+                "pages": [
+                  "telemetry-pipelines/set-up-and-process-http-endpoint-data",
+                  "telemetry-pipelines/using-grok-to-parse",
+                  "telemetry-pipelines/error-code-reference",
+                  "telemetry-pipelines/archive-restore-data",
+                  "telemetry-pipelines/in-stream-alerts",
+                  "telemetry-pipelines/set-in-stream-alerts",
+                  "telemetry-pipelines/example-in-stream-alert-configurations",
+                  "telemetry-pipelines/getting-started-with-the-mezmo-platform",
+                  "telemetry-pipelines/api-references",
+                  "telemetry-pipelines/view-event-metrics",
+                  "telemetry-pipelines/configure-surge-detection-alerts",
+                  "telemetry-pipelines/archive-restore-data-tutorial",
+                  "telemetry-pipelines/high-error-rate",
+                  "telemetry-pipelines/presence-of-personally-identifying-information--pii-",
+                  "telemetry-pipelines/otel-collector",
+                  "telemetry-pipelines/aws-cloudwatch-logs",
+                  "telemetry-pipelines/checkly"
+                ]
+              }
             ]
           },
           {
-            "group": "Guide to Pipeline Architecture",
+            "tab": "Mezmo Edge",
             "pages": [
-              "guide-to-pipeline-architecture/types-of-telemetry-data-pipelines",
-              "guide-to-pipeline-architecture/understanding-your-data-to-optimize-it",
-              "guide-to-pipeline-architecture/basic-log-analysis-pipeline",
-              "guide-to-pipeline-architecture/basic-data-optimization-pipeline",
-              "guide-to-pipeline-architecture/kafka-data-optimization-pipeline",
-              "guide-to-pipeline-architecture/kubernetes-data-optimization-pipeline",
-              "guide-to-pipeline-architecture/basic-data-rehydration-pipeline",
-              "guide-to-pipeline-architecture/convert-events-to-metrics",
-              "guide-to-pipeline-architecture/mask-and-encrypt-data",
-              "guide-to-pipeline-architecture/route-data",
-              "guide-to-pipeline-architecture/build-a-basic-data-rehydration-pipeline",
-              "guide-to-pipeline-architecture/log-analysis-source-pipeline",
-              "guide-to-pipeline-architecture/responsive-otel-pipeline-tutorial",
-              "guide-to-pipeline-architecture/1--introduction",
-              "guide-to-pipeline-architecture/2---shared-sources",
-              "guide-to-pipeline-architecture/3---configure-and-build-the-demo",
-              "guide-to-pipeline-architecture/4---profile-log-data",
-              "guide-to-pipeline-architecture/5---optimize-logs",
-              "guide-to-pipeline-architecture/6---optimize-metrics",
-              "guide-to-pipeline-architecture/7---optimize-traces",
-              "guide-to-pipeline-architecture/8---optimize-responsibly"
+              "mezmo-edge/mezmo-edge-pipelines-for-local-data",
+              "mezmo-edge/set-up-mezmo-edge-in-kubernetes",
+              "mezmo-edge/mezmo-edge-deployment-planning",
+              "mezmo-edge/http-source-for-mezmo-edge",
+              "mezmo-edge/syslog-source-for-mezmo-edge",
+              "mezmo-edge/set-up-mezmo-edge-in-a-docker-container",
+              "mezmo-edge/tap-and-view-mezmo-edge-pipeline-data-on-premises"
             ]
           },
           {
-            "group": "Pipeline API Quickstart",
-            "pages": [
-              "pipeline-api-quickstart/getting-started-with-the-mezmo-pipeline-api"
+            "tab": "Guides",
+            "groups": [
+              {
+                "group": "Optimization Tutorial",
+                "pages": [
+                  "OptTutorial/1-intro",
+                  "OptTutorial/2-shared-sources",
+                  "OptTutorial/3-configure-build-demo",
+                  "OptTutorial/4-profile-log-data",
+                  "OptTutorial/5-optimize-logs",
+                  "OptTutorial/6-optimize-metrics",
+                  "OptTutorial/7-optimize-traces",
+                  "OptTutorial/8-optimize-responsively",
+                  "OptTutorial/9-next-steps"
+                ]
+              },
+              {
+                "group": "Practitioner's Guide to Data Optimization",
+                "pages": [
+                  "practioner-guide-data-optimization/data-optimization-introduction",
+                  "practioner-guide-data-optimization/optimize-your-observability-data-in-six-steps",
+                  "practioner-guide-data-optimization/analysis-data-reduction-techniques",
+                  "practioner-guide-data-optimization/reference-architectures-for-data-optimization-pipelines",
+                  "practioner-guide-data-optimization/pipeline-architecture-for-data-reduction",
+                  "practioner-guide-data-optimization/pipeline-architecture-for-kubernetes-data-optimization",
+                  "practioner-guide-data-optimization/pipeline-example--convert-200-events-to-metrics",
+                  "practioner-guide-data-optimization/pipeline-module--security-and-compliance",
+                  "practioner-guide-data-optimization/pipeline-module--route",
+                  "practioner-guide-data-optimization/demo-pipeline-guide8ke"
+                ]
+              },
+              {
+                "group": "Guide to Pipeline Architecture",
+                "pages": [
+                  "guide-to-pipeline-architecture/types-of-telemetry-data-pipelines",
+                  "guide-to-pipeline-architecture/understanding-your-data-to-optimize-it",
+                  "guide-to-pipeline-architecture/basic-log-analysis-pipeline",
+                  "guide-to-pipeline-architecture/basic-data-optimization-pipeline",
+                  "guide-to-pipeline-architecture/kafka-data-optimization-pipeline",
+                  "guide-to-pipeline-architecture/kubernetes-data-optimization-pipeline",
+                  "guide-to-pipeline-architecture/basic-data-rehydration-pipeline",
+                  "guide-to-pipeline-architecture/convert-events-to-metrics",
+                  "guide-to-pipeline-architecture/mask-and-encrypt-data",
+                  "guide-to-pipeline-architecture/route-data",
+                  "guide-to-pipeline-architecture/build-a-basic-data-rehydration-pipeline",
+                  "guide-to-pipeline-architecture/log-analysis-source-pipeline",
+                  "guide-to-pipeline-architecture/responsive-otel-pipeline-tutorial",
+                  "guide-to-pipeline-architecture/1--introduction",
+                  "guide-to-pipeline-architecture/2---shared-sources",
+                  "guide-to-pipeline-architecture/3---configure-and-build-the-demo",
+                  "guide-to-pipeline-architecture/4---profile-log-data",
+                  "guide-to-pipeline-architecture/5---optimize-logs",
+                  "guide-to-pipeline-architecture/6---optimize-metrics",
+                  "guide-to-pipeline-architecture/7---optimize-traces",
+                  "guide-to-pipeline-architecture/8---optimize-responsibly"
+                ]
+              },
+              {
+                "group": "Pipeline API Quickstart",
+                "pages": [
+                  "pipeline-api-quickstart/getting-started-with-the-mezmo-pipeline-api"
+                ]
+              }
             ]
-          }
-        ]
-      },
-      {
-        "tab": "API References",
-        "pages": [
-          "docs/api",
+          },
           {
-            "group": "Mezmo API",
-            "openapi": "apis/combined-mezmo-api.yaml"
+            "tab": "API References",
+            "pages": [
+              "docs/api",
+              {
+                "group": "Mezmo API",
+                "openapi": "apis/combined-mezmo-api.yaml"
+              }
+            ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "About",
-          "href": "https://www.mezmo.com/about"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://www.mezmo.com/blog"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.png",
@@ -519,7 +532,6 @@
     "href": "https://www.mezmo.com"
   },
   "navbar": {
-    
     "primary": {
       "type": "button",
       "label": "Get a Demo",
@@ -527,13 +539,7 @@
     }
   },
   "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "assistant",
-      "mcp",
-      "download-spec"
-    ]
+    "options": ["copy", "view", "assistant", "mcp", "download-spec"]
   },
   "footer": {
     "socials": {
@@ -547,7 +553,7 @@
       "robots": "noindex"
     }
   },
-  "description": "Explore guides, APIs, tutorials, and reference materials for collecting telemetry and using Mezmo’s SRE agent to manage production environments.",
+  "description": "Your infrastructure. Your rules. Your SRE agent. Docs for AURA, the open source SRE agent, and the Mezmo Platform for telemetry.",
   "redirects": [
     {
       "source": "/docs/search",
