@@ -32,6 +32,58 @@
         "pages": ["index"]
       },
       {
+        "tab": "AURA",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "aura/index",
+              "aura/quickstart",
+              "aura/installation",
+              "aura/quickstart-docker",
+              "aura/example-configs",
+              "aura/quickstart-k8s-sre"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "aura/configuration-reference",
+              "aura/breaking-changes-20260410-agent-llm-toml-configuration",
+              "aura/breaking-changes-20260421-llm-under-agent",
+              "aura/breaking-changes-20260723-empty-mcp-filter"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              "aura/streaming-api-guide",
+              "aura/a2a-implementation",
+              "aura/hitl",
+              "aura/scratchpad",
+              "aura/skills",
+              "aura/client-side-tools",
+              "aura/ollama-guide",
+              "aura/telemetry",
+              "aura/request-lifecycle",
+              "aura/tracing-spans"
+            ]
+          },
+          {
+            "group": "CLI Reference",
+            "pages": ["aura/cli-reference"]
+          },
+          {
+            "group": "Web Server Reference",
+            "pages": ["aura/web-server-reference"]
+          }
+        ]
+      },
+      {
+        "tab": "Platform",
+        "pages": ["mezmo-platform"]
+      },
+      {
         "tab": "Log Management",
         "groups": [
           {
@@ -376,54 +428,6 @@
         ]
       },
       {
-        "tab": "AURA",
-        "groups": [
-          {
-            "group": "Getting Started",
-            "pages": [
-              "aura/index",
-              "aura/quickstart",
-              "aura/installation",
-              "aura/quickstart-docker",
-              "aura/example-configs",
-              "aura/quickstart-k8s-sre"
-            ]
-          },
-          {
-            "group": "Configuration",
-            "pages": [
-              "aura/configuration-reference",
-              "aura/breaking-changes-20260410-agent-llm-toml-configuration",
-              "aura/breaking-changes-20260421-llm-under-agent",
-              "aura/breaking-changes-20260723-empty-mcp-filter"
-            ]
-          },
-          {
-            "group": "Features",
-            "pages": [
-              "aura/streaming-api-guide",
-              "aura/a2a-implementation",
-              "aura/hitl",
-              "aura/scratchpad",
-              "aura/skills",
-              "aura/client-side-tools",
-              "aura/ollama-guide",
-              "aura/telemetry",
-              "aura/request-lifecycle",
-              "aura/tracing-spans"
-            ]
-          },
-          {
-            "group": "CLI Reference",
-            "pages": ["aura/cli-reference"]
-          },
-          {
-            "group": "Web Server Reference",
-            "pages": ["aura/web-server-reference"]
-          }
-        ]
-      },
-      {
         "tab": "Guides",
         "groups": [
           {
@@ -503,12 +507,12 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Platform",
-          "href": "/mezmo-platform"
-        },
-        {
           "anchor": "AURA",
           "href": "/aura"
+        },
+        {
+          "anchor": "Platform",
+          "href": "/mezmo-platform"
         }
       ]
     }
