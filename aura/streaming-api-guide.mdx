@@ -911,6 +911,8 @@ Note: Workers that use scratchpad emit `aura.scratchpad_usage` when they finish 
 }
 ```
 
+The `usage` object totals every LLM turn in the request. For an orchestrated run, that includes the coordinator's turns and every worker's turns.
+
 **Stream end**:
 ```
 data: [DONE]
