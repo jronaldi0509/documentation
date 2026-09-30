@@ -83,7 +83,7 @@ Client POST /v1/chat/completions
 
 - **First chunk timeout (90 sec)**: Catches provider connection failures early. If the LLM hasn't sent any data within this window, the request is aborted rather than hanging for the full stream timeout. The window is sized for reasoning models, which can legitimately take over a minute before the first chunk.
 - **Stream inactivity timeout (disabled by default)**: Closes the gap between the first-chunk timeout, which guards only the opening chunk, and the stream timeout, which is the whole-request budget. Once streaming starts, a provider that goes silent between chunks runs all the way to the stream timeout by default. Enable this to fail a stalled stream sooner.
-- **Stream timeout (15 min)**: Supports long-running MCP tools. Set to 0 to disable (not recommended).
+- **Stream timeout (15 min)**: Supports long-running MCP tools. It's the only setting that caps total request length. Set it to `0` to remove the cap (not recommended). Without the cap, no setting limits how long a request runs. The first chunk timeout stops applying once output starts, and the stream inactivity timeout, when enabled, bounds only the gaps between stream items. Non-streaming requests have neither window, so the stream timeout is their only time limit.
 - **Heartbeat (15 sec)**: Standard SSE keepalive. Detects disconnect during silent tool execution.
 
 ### Tuning Stream Inactivity Timeouts
