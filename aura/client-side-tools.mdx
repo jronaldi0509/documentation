@@ -94,7 +94,7 @@ Both halves of the system gate this independently **and both must opt in for loc
 | Standalone, single-agent, both on    | `true`                                    | required                               | Local tools fully enabled                                                                        |
 | Standalone, single-agent, TOML off   | absent / `false`                          | (any)                                   | Tools advertised but the in-process server **silently drops** them; CLI prints a startup warning |
 | HTTP, single-agent, both on          | `true`                                    | required                               | Local tools fully enabled                                                                        |
-| HTTP, single-agent, agent off        | absent / `false`                          | (any)                                   | Tools advertised but server **silently drops** them. No local tools.                              |
+| HTTP, single-agent, agent off        | absent / `false`                          | (any)                                   | Tools advertised but server **silently drops** them. No local tools.                             |
 | Standalone or HTTP, **orchestrated** | any orchestrated config                   | (any)                                   | Tools advertised but server **drops with warning**: orchestration unsupported                   |
 | Both off                             | absent / `false`                          | client without flag                    | Pure chat                                                                                         |
 

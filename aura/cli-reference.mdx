@@ -153,7 +153,7 @@ cargo build -p aura-cli --no-default-features
 | `AURA_API_KEY`                        | Bearer token for authentication                                                                                                                                     | _(none)_                                              |
 | `AURA_MODEL`                          | Model name to use (in standalone mode, selects agent by name/alias)                                                                                                 | _(none: omitted from request, server picks default)_ |
 | `AURA_EXTRA_HEADERS`                  | Additional HTTP headers as comma-separated `key:value` pairs (e.g. `x-chat-session-id:foo,authorization:Bearer …`); overrides the auto-injected `x-chat-session-id` | _(none)_                                              |
-| `AURA_ENABLE_FINAL_RESPONSE_SUMMARY`  | Generate a one-line LLM-based title for each final response (adds an extra round-trip per turn). Set to `true` or `1` to enable.                                    | `false`                                               |
+| `AURA_ENABLE_FINAL_RESPONSE_SUMMARY`  | Generate a one-line LLM-based title for each final response (adds an extra round-trip per turn). Set to `true` or `1` to enable.                                   | `false`                                               |
 | `AURA_ENABLE_CLIENT_TOOLS`            | Advertise CLI local tools to the model and execute them locally (see [Client-Side Tools](#client-side-tools))                                                       | `false`                                               |
 | `AURA_LOG_FILE`                       | Path to a file for diagnostic tracing logs. Unset → no logging. Set → events are appended to the file in both REPL and one-shot mode (see [Logging](#logging))      | _(none: no logging)_                                 |
 
@@ -448,11 +448,11 @@ Other relevant OTel env vars, read by the `aura` crate:
 
 | Variable                                | Purpose                                                                                              |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `OTEL_EXPORTER_OTLP_ENDPOINT`           | OTLP collector endpoint (gRPC). When unset, no OTel layer is installed even in standalone mode.      |
-| `OTEL_SERVICE_NAME`                     | Resource attribute (defaults to `aura`).                                                             |
-| `OTEL_LOG_LEVEL`                        | Override the OTel layer's filter. Default captures `aura=trace`, `aura_cli=info`, and rig spans.     |
-| `OTEL_RECORD_CONTENT`                   | When `true`, prompt/completion/tool args/results are recorded as span attributes.                    |
-| `OTEL_CONTENT_MAX_LENGTH`               | Max bytes for content attributes (default 1000, rounded down to UTF-8 boundary).                     |
+| `OTEL_EXPORTER_OTLP_ENDPOINT`           | OTLP collector endpoint (gRPC). When unset, no OTel layer is installed even in standalone mode.     |
+| `OTEL_SERVICE_NAME`                     | Resource attribute (defaults to `aura`).                                                            |
+| `OTEL_LOG_LEVEL`                        | Override the OTel layer's filter. Default captures `aura=trace`, `aura_cli=info`, and rig spans.    |
+| `OTEL_RECORD_CONTENT`                   | When `true`, prompt/completion/tool args/results are recorded as span attributes.                   |
+| `OTEL_CONTENT_MAX_LENGTH`               | Max bytes for content attributes (default 1000, rounded down to UTF-8 boundary).                    |
 
 ---
 
