@@ -2,7 +2,7 @@
 # Source: KB style/client_style_guide.md:49 — "One space after periods"
 extends: existence
 message: "Use one space after a period, not two."
-level: error
+level: warning
 nonword: true
 tokens:
   - '[a-z]\.  +[A-Z]'

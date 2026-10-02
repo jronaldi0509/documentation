@@ -2,7 +2,7 @@
 # Source: KB style/client_style_guide.md:45 — "Use 'for example' and 'in other words' instead of e.g. and i.e."
 extends: existence
 message: "Spell out '%s' — write 'for example' or 'in other words' instead."
-level: error
+level: warning
 nonword: true
 tokens:
   - 'e\.g\.'

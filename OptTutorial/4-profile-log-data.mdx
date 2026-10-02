@@ -7,7 +7,7 @@ description: "Build an exploration pipeline with the Mezmo Data Profiler to surf
 
 ## Why it matters
 
-The Mezmo [Data Profiler](/telemetry-pipelines/data-profiling)  gives teams real-time visibility into the shape and quality of their telemetry data as it flows through the pipeline. It automatically surfaces schemas, cardinality, and value distributions to highlight noisy, inconsistent, or high-cost fields. With these insights, teams can make informed decisions on filtering, redaction, and enrichment—optimizing both observability costs and the usefulness of their data.
+The Mezmo [Data Profiler](/telemetry-pipelines/data-profiling)  gives teams real-time visibility into the shape and quality of their telemetry data as it flows through the pipeline. It automatically surfaces schemas, cardinality, and value distributions to highlight noisy, inconsistent, or high-cost fields. With these insights, teams can make informed decisions on filtering, redaction, and enrichment. Optimizing both observability costs and the usefulness of their data.
 
 The Data Profiler currently works with log data. It categorizes this data by app, host, level, and type, based on how the processor is configured. It will also identify other fields and report on their cardinality. To build a Data Profile report, you'll need a pipeline with the Data Profiler processor in it. Mezmo recommends that this pipeline be separate from pipelines that feed your observability destinations, as the Data Profiler adds additional annotation data that is specific to it and not useful for observability purposes. 
 
