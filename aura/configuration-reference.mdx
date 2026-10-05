@@ -426,7 +426,7 @@ source = "skills/"        # relative to process CWD, or absolute
 source = "/opt/shared-skills"
 ```
 
-A `load_skill` tool is exposed to the agent that loads and executes skills on demand, along with a `read_skill_file` tool for fetching individual resource files from a skill's directory.
+A `load_skill` tool is exposed to the agent that loads and executes skills on demand, along with a `read_skill_file` tool for fetching individual resource files from a skill's directory. Skills the agent loads stay in context on later turns of the same chat session. See [Skill Persistence Across Turns](/aura/skills#skill-persistence-across-turns).
 
 ---
 
@@ -569,7 +569,7 @@ timeout_secs = 300
 
 Unlike every other section on this page, the session store is **not configured in TOML**. It's deployment infrastructure (one instance per server, not per-agent), so it's configured only via environment variables.
 
-By default, cross-request session state (A2A tasks, parked HITL approvals) lives in process memory. Correct for a single pod, the CLI, and local dev. Behind a load balancer with multiple replicas, configure a shared Redis/Valkey backend and every cross-request flow works no matter which pod serves each request: A2A `message:send` → poll → `list` → history-by-context, A2A `subscribe`/`cancel` against a task executing on another pod, and conversational HITL approvals resolved by a `POST /v1/approvals/{id}` that lands away from the pod that parked them.
+By default, cross-request session state (A2A tasks, parked HITL approvals, and skill-invocation logs) lives in process memory. Correct for a single pod, the CLI, and local dev. Behind a load balancer with multiple replicas, configure a shared Redis/Valkey backend and every cross-request flow works no matter which pod serves each request: A2A `message:send` → poll → `list` → history-by-context, A2A `subscribe`/`cancel` against a task executing on another pod, and conversational HITL approvals resolved by a `POST /v1/approvals/{id}` that lands away from the pod that parked them.
 
 ```bash
 export AURA_SESSION_STORE=redis                          # memory (default) | redis
@@ -577,7 +577,10 @@ export AURA_SESSION_STORE_URL=redis://valkey:6379        # redis:// or rediss://
 export AURA_SESSION_STORE_PREFIX=aura:prod               # optional namespace (default "aura")
 export AURA_SESSION_STORE_CONNECT_TIMEOUT_SECS=5         # optional
 export AURA_SESSION_STORE_TASK_TTL_SECS=86400            # optional; 0 = no expiry
+export AURA_SESSION_STORE_SKILLS_TTL_SECS=86400          # optional; 0 = no expiry
 ```
+
+`AURA_SESSION_STORE_SKILLS_TTL_SECS` sets how long a chat session's skill-invocation log lives after the agent last calls `load_skill` or `read_skill_file`. It defaults to `86400` (24 hours), and `0` disables expiry. The Redis and file backends apply it. The memory backend has no expiry and clears its logs on restart. See [Skill Persistence Across Turns](/aura/skills#skill-persistence-across-turns).
 
 The server pings the backend at startup and fails fast if it is unreachable; `/health` reports the backend and its ping latency.
 

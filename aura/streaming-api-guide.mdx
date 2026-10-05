@@ -139,6 +139,7 @@ AURA_CUSTOM_EVENTS=true cargo run --bin aura -- webserver
 | `aura.reasoning` | LLM reasoning content (requires `AURA_EMIT_REASONING=true`) | ✅ Implemented |
 | `aura.progress` | MCP progress notifications during long-running tools | ✅ Implemented |
 | `aura.session_info` | Session metadata (model, context window) emitted at stream start | ✅ Implemented |
+| `aura.skills_rehydrated` | Skill invocations from earlier turns replayed into this turn's context, emitted at stream start | ✅ Implemented |
 | `aura.mcp_status` | Per-server MCP connection status emitted at stream start (connected/failed/not_attempted, with failure reason) | ✅ Implemented |
 | `aura.worker_phase` | Worker phase transitions in multi-agent mode (planning/executing/analyzing) | ✅ Implemented |
 | `aura.tool_usage` | Usage snapshot after tool execution (associates tool IDs with token counts) | ✅ Implemented |
@@ -290,6 +291,20 @@ data:
 ```
 
 Note: `aura.session_info` includes only `CorrelationContext` fields (`session_id`, `trace_id`). No `agent_id`. `model_context_limit` comes from the `context_window` field in the `[agent.llm]` TOML config section (or `[orchestration.worker.<name>.llm]` for per-worker overrides). If `context_window` is not set, `model_context_limit` is omitted from the event.
+
+**Skill replay** (emitted once at stream start, after `aura.session_info`, when the turn replays skills recorded on earlier turns of the chat session):
+```
+event: aura.skills_rehydrated
+data:
+```
+```json
+{
+  "skills": ["code-review", "code-review/references/checklist.md"],
+  "session_id": "sess_xyz"
+}
+```
+
+Note: each `skills` entry names one replayed invocation. A `load_skill` call appears as the skill name, and a `read_skill_file` call appears as `<skill>/<path>`. The list includes only invocations that replayed on this turn, and the event is omitted when nothing replays. `aura.skills_rehydrated` includes only `CorrelationContext` fields (`session_id`, `trace_id`). No `agent_id`. For how AURA records and replays skills, see [Skill Persistence Across Turns](/aura/skills#skill-persistence-across-turns).
 
 **MCP status** (emitted once when at least one MCP server is configured. At stream start in single-agent mode, or just after the shared manager connects in orchestration mode):
 ```
@@ -1065,4 +1080,7 @@ cargo run --bin aura -- webserver --shutdown-timeout-secs 60
 Content-Type: text/event-stream
 Cache-Control: no-cache
 X-Accel-Buffering: no
+X-Chat-Session-Id: sess_xyz
 ```
+
+`X-Chat-Session-Id` carries the request's chat session ID. Send it back on later turns to continue the same session. For how AURA picks the ID, see [How AURA Identifies a Conversation](/aura/skills#how-aura-identifies-a-conversation).
