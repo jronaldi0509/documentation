@@ -5,7 +5,7 @@ description: "Request flow, timeout configuration, cancellation, and graceful sh
 
 ## Overview
 
-AURA manages per-request state (cancellation tokens, subscriptions) across streaming SSE connections. This document covers the lifecycle, timeout configuration, and known limitations.
+Each request to AURA starts a run. The run owns the request's state: a cancellation token and an event channel that carries tool, MCP progress, usage, and approval events to the response stream. That state is created when the run starts and released when it ends. This document covers the lifecycle, timeout configuration, and known limitations.
 
 ---
 
@@ -28,9 +28,9 @@ Client POST /v1/chat/completions
          ▼
 ┌─────────────────────────────────────┐
 │ Spawn producer task                 │
-│   - Register cancellation token     │
-│   - Subscribe to progress events    │
-│   - Subscribe to tool events        │
+│   - Start the run (own cancellation │
+│     token and event channel)        │
+│   - Read the run's event channel    │
 └─────────────────────────────────────┘
          │
          ▼
@@ -49,19 +49,16 @@ Client POST /v1/chat/completions
          │                  │                  │
          │                  ▼                  ▼
          │          ┌──────────────────┐  ┌──────────────────┐
-         │          │ Cancel token     │  │ Cancel hook +    │
-         │          │ Send MCP cancel  │  │  registry        │
-         │          │ Evict from pool  │  │ Send [DONE]      │
-         │          └──────────────────┘  │ Then MCP cleanup │
-         │                  │             │ (no pool evict)  │
+         │          │ Cancel run token │  │ Cancel run token │
+         │          │ Send MCP cancel  │  │ Send [DONE]      │
+         │          │ Evict from pool  │  │ Then MCP cleanup │
+         │          └──────────────────┘  │ (no pool evict)  │
          │                  │             └──────────────────┘
          └──────────┬───────┴──────────────────┘
                     ▼
 ┌─────────────────────────────────────┐
 │ Cleanup (RAII guard)                │
-│   - Unregister cancellation         │
-│   - Unsubscribe progress            │
-│   - Unsubscribe tool events         │
+│   - Cancel pending HITL approvals   │
 └─────────────────────────────────────┘
 ```
 
@@ -106,13 +103,13 @@ Aura pins OpenAI to Chat Completions, which streams nothing while the model is t
 
 ## Tool Event Correlation
 
-Rig spawns tool execution in separate tokio tasks. The hook context (where the LLM decides to call a tool) and the execution context (where MCP actually runs) are decoupled, requiring a mechanism to correlate `tool_call_id` across these boundaries. AURA does this with a per-request FIFO queue. This relies on Rig's streaming mode executing tools sequentially within a request; see [Rig Fork Changes](https://github.com/mezmo/aura/blob/main/docs/rig-fork-changes.md) for the validation methodology if you're tracking Rig upstream compatibility.
+Rig spawns tool execution in separate tokio tasks. The hook context (where the LLM decides to call a tool) and the execution context (where MCP actually runs) are decoupled, requiring a mechanism to correlate `tool_call_id` across these boundaries. AURA does this with a FIFO queue that the run holds, so the queue lives and ends with the run. This relies on Rig's streaming mode executing tools sequentially within a request; see [Rig Fork Changes](https://github.com/mezmo/aura/blob/main/docs/rig-fork-changes.md) for the validation methodology if you're tracking Rig upstream compatibility.
 
 ---
 
 ## Cleanup Mechanism
 
-Request resources (cancellation registration, progress/tool-event subscriptions) are cleaned up via an RAII guard that ensures cleanup runs even on panic. If the async runtime is already gone (process exit), cleanup is skipped. Resources are reclaimed with the process.
+The run's cancellation token, event channel, and tool-call queue belong to the run, so they're released when the run ends. An RAII guard cancels the request's pending HITL approvals, and runs even on panic. If the async runtime is already gone (process exit), cleanup is skipped. Resources are reclaimed with the process.
 
 ---
 
@@ -120,7 +117,7 @@ Request resources (cancellation registration, progress/tool-event subscriptions)
 
 On client disconnect or timeout:
 
-1. The cancellation token signals all waiting code
+1. The run's cancellation token signals all waiting code, including tool calls paused for a HITL approval
 2. Aura sends `notifications/cancelled` to MCP servers
 3. The agent is evicted from its connection pool to prevent stale connections
 
@@ -143,7 +140,7 @@ The server uses a two-phase shutdown with separate cancellation tokens:
 2. **Phase 1 (immediate)**: `shutdown_token` cancelled. Middleware returns 503 for all new requests
 3. **Grace period**: In-flight streams continue running for up to `SHUTDOWN_TIMEOUT_SECS` (default 30s). Streams that complete naturally during this window are unaffected.
 4. **Phase 2 (drain)**: `stream_shutdown_token` cancelled. Remaining streams:
-   - Cancel hook + request registry (stops in-flight MCP tool execution)
+   - Cancel the run's token (stops in-flight MCP tool execution and pending HITL approvals)
    - Send `[DONE]` to client (before MCP cleanup, so client gets clean termination)
    - Run MCP cleanup (send `notifications/cancelled`, close connections)
    - No pool eviction (pool is dying with the server)
