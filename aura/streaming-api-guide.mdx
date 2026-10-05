@@ -781,7 +781,7 @@ Note: Workers that use scratchpad emit `aura.scratchpad_usage` when they finish 
 |-------------|--------|-------|
 | Task lifecycle | `task_started` → `worker_reasoning` → `tool_call_*` → `task_completed` | `task_id` |
 | Tool lifecycle | `tool_call_started` → `tool_call_completed` | `tool_call_id` |
-| Worker identity | `task_*`, `worker_reasoning`, `tool_call_*` | `worker_id` |
+| Worker identity | `task_*`, `worker_reasoning`, `tool_call_started`, `tool_call_completed` | `worker_id` |
 | Agent hierarchy | All orchestration events | `agent_id` (`"coordinator"` or worker name) |
 | Replan cycle | `iteration_complete` → `replan_started` → `plan_created` | `iteration` |
 
