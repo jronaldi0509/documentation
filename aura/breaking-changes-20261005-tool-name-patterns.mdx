@@ -39,7 +39,7 @@ A pattern that loaded before can now stop AURA from starting:
 | `""` | A pattern can't be empty. | Remove the entry. An empty list such as `mcp_filter = []` is still valid. |
 | `"git\\*"` | There is no escape character. | Remove the `\`. |
 | `"github::*"`, `"a:b:c"`, `"github:"` | A pattern can contain only one `:`, with a non-empty segment on each side. | Use `<namespace>:<name>`, such as `"github:*"`. |
-| `"get_[*]"`, `"get_{a,{b,c}}"`, `"get_[abc"` | A class holds only literal characters, alternatives can't nest, and every `[` and `{` needs its closing bracket. | Rewrite the class or alternative, for example `"get_{a,b,c}"`. |
+| `"list[*]"`, `"get_{a,{b,c}}"`, `"get_[abc"` | A class holds only literal characters, alternatives can't nest, and every `[` and `{` needs its closing bracket. | Rewrite the class or alternative, for example `"get_{a,b,c}"`. |
 | A run of more than 64 letters, digits, `_`, `-`, `/`, and `.` | A literal run can be at most 64 characters, even when a wildcard follows it. | Shorten the run, or replace part of it with `?` or `*`. |
 
 ## Patterns That Now Match Differently
