@@ -130,7 +130,7 @@ MCP servers receive the cancellation notification and can abort in-progress oper
 
 ## Graceful Shutdown
 
-The server uses a two-phase shutdown with separate cancellation tokens:
+The server signals shutdown through two cancellation tokens:
 
 | Token | Cancelled | Purpose |
 |-------|-----------|---------|
@@ -141,13 +141,15 @@ The server uses a two-phase shutdown with separate cancellation tokens:
 
 1. **SIGTERM/SIGINT** received
 2. **Phase 1 (immediate)**: `shutdown_token` cancelled. Middleware returns 503 for all new requests
-3. **Grace period**: In-flight streams continue running for up to `SHUTDOWN_TIMEOUT_SECS` (default 30s). Streams that complete naturally during this window are unaffected.
+3. **Grace period**: In-flight streams continue running for up to `SHUTDOWN_TIMEOUT_SECS` (default 30s). Streams that complete naturally during this window are unaffected. If every in-flight request finishes within this window, the server skips to step 6.
 4. **Phase 2 (drain)**: `stream_shutdown_token` cancelled. Remaining streams:
    - Cancel hook + request registry (stops in-flight MCP tool execution)
    - Send `[DONE]` to client (before MCP cleanup, so client gets clean termination)
    - Run MCP cleanup (send `notifications/cancelled`, close connections)
    - No pool eviction (pool is dying with the server)
-5. **Server stops**: Workers have 10s to complete Phase 2 cleanup
+5. **Phase 3 (abort)**: Remaining streams have 5s to finish Phase 2. If request tasks are still running after that, the server logs `Stream shutdown grace period expired, aborting stragglers` and aborts them, so their spans close before the telemetry flush.
+6. **Shutdown complete**: The server logs `shutdown complete` with two fields. `clean_shutdown` is `true` when no request had to be aborted. `unaborted_tasks` is `true` when the abort step didn't finish within 400 ms.
+7. **Telemetry flush**: The server stops and flushes buffered OpenTelemetry spans, waiting up to 5s for the export.
 
 ### Shutdown vs Disconnect/Timeout
 
