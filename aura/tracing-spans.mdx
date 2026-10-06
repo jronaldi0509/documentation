@@ -93,6 +93,19 @@ calls carry no `decision_id` attribute.
 `decision_id` sits on the `execute_tool` (TOOL) parent, not on the nested
 `mcp.tool_call` child, where the tool's own status and errors land.
 
+### MCP Tool Call Spans
+
+Each `mcp.tool_call` span identifies the tool it ran with these attributes:
+
+| Attribute | Value |
+|-----------|-------|
+| `tool.name` | The bare tool name the model called, such as `create_issue`. |
+| `tool.namespace` | The `[mcp.servers.<name>]` key of the MCP server that ran the tool, such as `github`. |
+
+AURA never adds the namespace to `tool.name`. See
+[Scope a Pattern to One MCP Server](/aura/configuration-reference#scope-a-pattern-to-one-mcp-server)
+for how namespaces work in tool-name patterns.
+
 ## OpenInference span kinds
 
 | Kind | Spans |
