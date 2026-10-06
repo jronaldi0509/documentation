@@ -564,7 +564,7 @@ flowchart TD
     B --> C["task_started<br/>Worker assigned (task_id, worker_id, orchestrator_id)"]
     C --> D["worker_reasoning<br/>Worker thinking (task_id, worker_id, content)"]
     D --> E["tool_call_started<br/>Worker calls a tool: MCP, skill, or operation (tool_call_id, tool_name, worker_id)"]
-    E --> F["tool_call_completed<br/>Tool result (duration_ms, success)"]
+    E --> F["tool_call_completed<br/>Tool result (tool_call_id, worker_id, duration_ms, success)"]
     F --> G["task_completed<br/>Worker finished (duration_ms, success, result)"]
     G --> H["synthesizing<br/>Coordinator merging results (iteration)"]
 
@@ -699,6 +699,7 @@ data:
 {
   "task_id": 0,
   "tool_call_id": "call_abc123",
+  "worker_id": "arithmetic",
   "success": true,
   "duration_ms": 42,
   "result": "10",
@@ -707,7 +708,7 @@ data:
 }
 ```
 
-Note: `task_id` is omitted if it could not be determined. `result` is truncated per `TOOL_RESULT_MAX_LENGTH` and omitted when empty.
+Note: `task_id` is omitted if it could not be determined. `result` is truncated per `TOOL_RESULT_MAX_LENGTH` and omitted when empty. `worker_id` names the worker that ran the tool, the same value as on the matching `tool_call_started` event. Older AURA servers omit `worker_id` from this event. To attribute a completion from one of them, match its `tool_call_id` to the `tool_call_started` event.
 
 **Tool coverage:** these events fire for the coordinator (`worker_id: "main"`) as well as workers. They cover MCP tools, the skill tools (`load_skill`, `read_skill_file`), and orchestration operations (`read_artifact`, `submit_result`, `list_prior_runs`). Scratchpad exploration tools are suppressed by default and emit only when `AURA_EMIT_SCRATCHPAD_TOOL_EVENTS` is set.
 
@@ -800,7 +801,7 @@ Note: Workers that use scratchpad emit `aura.scratchpad_usage` when they finish 
 |-------------|--------|-------|
 | Task lifecycle | `task_started` → `worker_reasoning` → `tool_call_*` → `task_completed` | `task_id` |
 | Tool lifecycle | `tool_call_started` → `tool_call_completed` | `tool_call_id` |
-| Worker identity | `task_*`, `worker_reasoning`, `tool_call_started` | `worker_id` |
+| Worker identity | `task_started`, `task_completed`, `worker_reasoning`, `tool_call_started`, `tool_call_completed` | `worker_id` |
 | Agent hierarchy | All orchestration events | `agent_id` (`"coordinator"` or worker name) |
 | Replan cycle | `iteration_complete` → `replan_started` → `plan_created` | `iteration` |
 
@@ -944,7 +945,7 @@ data: [DONE]
 |-------|---------|
 | `stop` | Normal completion |
 | `tool_calls` | Response included tool execution |
-| `length` | Response truncated due to `max_tokens` limit |
+| `length` | The response's total `completion_tokens` reached the request's `max_tokens`. In an orchestrated run, that total includes the coordinator and every worker, so a complete answer can report `length`. |
 
 ## Client Examples
 
@@ -1034,7 +1035,7 @@ The separator is automatically injected when text chunks resume after a `ToolRes
 
 ## Graceful Shutdown
 
-On SIGTERM or SIGINT, the server performs a two-phase shutdown to let in-flight requests finish:
+On SIGTERM or SIGINT, the server stops taking new requests, gives in-flight requests time to finish, and then ends any that remain so their OpenTelemetry spans are exported before it exits:
 
 ```mermaid
 flowchart TD
@@ -1044,25 +1045,45 @@ flowchart TD
     • New requests rejected with 503
     • In-flight streams continue running"]
 
-    B -->|"grace period _(SHUTDOWN_TIMEOUT_SECS, default 30s)_
-    in-flight streams may complete naturally"| C
+    B -->|"all requests finish within the grace period"| E
+    B -->|"grace period expires _(SHUTDOWN_TIMEOUT_SECS, default 30s)_"| C
 
-    C["**Phase 2: Drain** _(after grace period)_
+    C["**Phase 2: Drain** _(up to 5s)_
     • Remaining streams cancelled
     • Each stream sends \[DONE\] to client
     • MCP cleanup (cancel + close)"]
 
-    C -->|"10s buffer for \[DONE\] delivery + MCP cleanup"| D
+    C -->|"all requests finish"| E
+    C -->|"5s drain window expires"| D
 
-    D([Server exits])
+    D["**Phase 3: Abort**
+    • Request tasks still running are aborted"]
+
+    D --> E
+
+    E["**Shutdown complete**
+    • Completion logged
+    • OpenTelemetry spans flushed _(up to 5s)_"]
+
+    E --> F([Server exits])
 ```
 
 | Phase | Timing | What happens |
 |-------|--------|-------------|
 | **Gate** | Immediate | Middleware returns 503 for all new requests (including `/health`) |
-| **Grace period** | 0 – `SHUTDOWN_TIMEOUT_SECS` (default 30s) | In-flight streams continue running; streams that finish naturally are unaffected |
-| **Drain** | After grace period | `stream_shutdown_token` cancelled; remaining streams send `[DONE]`, then MCP cleanup runs |
-| **Exit** | Grace period + 10s buffer | Actix force-closes any remaining connections |
+| **Grace period** | 0 – `SHUTDOWN_TIMEOUT_SECS` (default 30s) | In-flight streams continue running. If they all finish, shutdown skips Drain and Abort. |
+| **Drain** | After the grace period, up to 5s | `stream_shutdown_token` cancelled; remaining streams send `[DONE]`, then MCP cleanup runs |
+| **Abort** | After the 5s drain window | The server logs `Stream shutdown grace period expired, aborting stragglers` and aborts request tasks that are still running |
+| **Exit** | After the last request ends | The server logs `shutdown complete`, flushes OpenTelemetry spans for up to 5s, and exits |
+
+The `shutdown complete` log line carries two fields:
+
+| Field | `true` when |
+|-------|-------------|
+| `clean_shutdown` | Every in-flight request finished during the grace period or the drain window, so the server aborted nothing |
+| `unaborted_tasks` | The abort step didn't finish within 400 ms, so some aborted request tasks hadn't stopped yet |
+
+For the per-stream drain steps and how shutdown differs from a client disconnect, see [Request Lifecycle](/aura/request-lifecycle#shutdown-sequence).
 
 Configure the grace period:
 
@@ -1074,7 +1095,7 @@ SHUTDOWN_TIMEOUT_SECS=60 cargo run --bin aura -- webserver
 cargo run --bin aura -- webserver --shutdown-timeout-secs 60
 ```
 
-**K8s tip**: Set `terminationGracePeriodSeconds` to at least `SHUTDOWN_TIMEOUT_SECS + 15` (default: 45s). The total shutdown budget is grace period + 10s Actix buffer. During Phase 1, `/health` returns 503. Readiness probes will fail immediately, removing the pod from service endpoints.
+**K8s tip**: Set `terminationGracePeriodSeconds` to at least `SHUTDOWN_TIMEOUT_SECS + 15` (default: 45s). After the grace period, shutdown can take about 10 more seconds: up to 5s to drain streams and up to 5s to flush OpenTelemetry spans. During Phase 1, `/health` returns 503. Readiness probes will fail immediately, removing the pod from service endpoints.
 
 <Note>The `/health` endpoint returns 503 during shutdown (same middleware gate as all routes). This is intentional — it signals load balancers and K8s readiness probes to stop routing traffic to this instance.</Note>
 

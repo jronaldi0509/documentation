@@ -252,6 +252,24 @@ apply only to `--query` mode.
 
 ---
 
+## SIGTERM Handling
+
+When the CLI receives SIGTERM in one-shot or REPL mode, it prints this
+warning to stderr:
+
+```text
+warning: received SIGTERM, flushing telemetry before exit
+```
+
+The CLI then flushes buffered [product telemetry](/aura/telemetry) and, in
+standalone mode, buffered OpenTelemetry spans, so a run you stop with SIGTERM
+still reaches your collector. The flush takes up to about 7 seconds. The CLI
+then exits with code `143`, the standard exit code for a process ended by
+SIGTERM. If you send SIGKILL before the flush finishes, any telemetry still
+buffered is lost.
+
+---
+
 ## Interactive Commands
 
 Once inside the REPL, the slash commands below are available. All slash commands can be executed while output is streaming.

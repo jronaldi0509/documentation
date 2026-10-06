@@ -160,6 +160,7 @@ subdir
 substring(s?)
 Sysdig
 Syslog
+task_(started|completed)
 tcp
 Throughputs
 Tiering
@@ -167,6 +168,7 @@ timeframe
 toggleable
 TOML
 toolset
+tool_call_(started|completed)
 tool_start
 tokeniz(er|ation)
 tokio
